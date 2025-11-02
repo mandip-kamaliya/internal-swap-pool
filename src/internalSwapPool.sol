@@ -16,3 +16,23 @@ import {IERC20Minimal} from '@uniswap/v4-core/src/interfaces/external/IERC20Mini
 import {IPoolManager} from '@uniswap/v4-core/src/interfaces/IPoolManager.sol';
  
 import {BaseHook} from 'v4-periphery/src/utils/BaseHook.sol';
+
+contract internalSwapPool is BaseHook{
+    using CurrencyLibrary for Currency;
+    using CurrencySettler for Currency;
+    using PoolIdLibrary for PoolKey;
+    using StateLibrary for IPoolManager;
+
+    uint public constant DONATE_THRESHOLD_MINIUM = 0.01 ether;
+
+    address public immutable nativeToken;
+
+    struct ClaimableFees {
+        uint amount0;
+        uint amount1;
+    }
+
+    mapping (PoolId _poolId => ClaimableFees _fees) internal _poolFees;
+
+
+}
