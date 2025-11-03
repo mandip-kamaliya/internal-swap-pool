@@ -244,6 +244,11 @@ contract internalSwapPool is BaseHook {
      *
      * @param _poolKey The PoolKey reference that will have fees distributed
      */
+
+        // Check the native delta amounts that we need to transfer from the contract
+    if (delta.amount0() < 0) {
+        _poolKey.currency0.settle(poolManager, address(this), uint(uint128(-delta.amount0())), false);
+    }
     function _distributeFees(PoolKey calldata _poolKey) internal {
         // Get the amount of the native token available to donate
         PoolId poolId = _poolKey.toId();
